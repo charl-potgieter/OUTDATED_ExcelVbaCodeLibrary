@@ -424,3 +424,38 @@ Sub DeleteFirstLineOfTextFile(ByVal sFilePathAndName As String)
     
 End Sub
 
+
+Function DownloadFileFromUrl(ByVal sUrl As String, ByVal sFilePathAndName As String, _
+    Optional bOverWriteFile As Boolean = False) As Boolean
+'https://stackoverflow.com/questions/17877389/how-do-i-download-a-file-using-vba-without-internet-explorer
+
+    Dim oStream
+    Dim iOverwriteParameter
+    Dim WinHttpReq As Object
+    
+    If bOverWriteFile = False Then
+        iOverwriteParameter = 1
+    Else
+        iOverwriteParameter = 2
+    End If
+    
+    On Error Resume Next
+    
+    Set WinHttpReq = CreateObject("Microsoft.XMLHTTP")
+    WinHttpReq.Open "GET", sUrl, False
+    WinHttpReq.send
+    
+    If WinHttpReq.Status = 200 Then
+        Set oStream = CreateObject("ADODB.Stream")
+        oStream.Open
+        oStream.Type = 1
+        oStream.Write WinHttpReq.responseBody
+        oStream.SaveToFile sFilePathAndName, iOverwriteParameter
+        oStream.Close
+    End If
+
+    DownloadFileFromUrl = (Err.Number = 0)
+    On Error GoTo 0
+
+End Function
+
