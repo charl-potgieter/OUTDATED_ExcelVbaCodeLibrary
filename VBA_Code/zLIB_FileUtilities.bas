@@ -1,4 +1,4 @@
-Attribute VB_Name = "mLIB_FileUtilities"
+Attribute VB_Name = "zLIB_FileUtilities"
 Option Explicit
 Option Private Module
 '-----------------------------------------------------------------------------
@@ -456,6 +456,38 @@ Function DownloadFileFromUrl(ByVal sUrl As String, ByVal sFilePathAndName As Str
 
     DownloadFileFromUrl = (Err.Number = 0)
     On Error GoTo 0
+
+End Function
+
+
+
+
+Function ConvertTextFileUnixToWindowsLineFeeds _
+    (sSourceFilePathAndName As String, Optional sTargetFilePathAndName As String = "") As Boolean
+'Inspired by : https://newtonexcelbach.com/2015/11/10/importing-text-files-unix-format/
+'*Nix operating systems utilise different line feeds in text files compared to Windows.
+'This function converts to Windows Format
+
+    Dim WholeLine As String
+    Dim iFileNo As Integer
+
+    'Get first free file number
+    iFileNo = FreeFile
+
+    If sTargetFilePathAndName = "" Then sTargetFilePathAndName = sSourceFilePathAndName
+    Open sSourceFilePathAndName For Input Access Read As #iFileNo
+
+    Line Input #iFileNo, WholeLine
+    If EOF(iFileNo) Then
+        WholeLine = Replace(WholeLine, vbLf, vbCrLf)
+        Close #iFileNo
+        Open sTargetFilePathAndName For Output Access Write As #iFileNo
+        Print #iFileNo, WholeLine
+        Close #iFileNo
+        ConvertTextFileUnixToWindowsLineFeeds = True
+    Else
+        ConvertTextFileUnixToWindowsLineFeeds = False
+    End If
 
 End Function
 

@@ -1,4 +1,4 @@
-Attribute VB_Name = "mLIB_SundryUtilities"
+Attribute VB_Name = "zLIB_SundryUtilities"
 Option Explicit
 Option Private Module
 

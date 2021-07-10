@@ -1,4 +1,4 @@
-Attribute VB_Name = "mLIB_ArrayUtilities"
+Attribute VB_Name = "zLIB_ArrayUtilities"
 Option Explicit
 Option Compare Text
 
