@@ -9,6 +9,6 @@ Sub TestDelete()
     Set s = New zLIB_ListStorage
     
     s.CreateStorage ActiveWorkbook, "Test", Array("a", "b")
-    s.DeleteStorage
+    s.Delete
 
 End Sub

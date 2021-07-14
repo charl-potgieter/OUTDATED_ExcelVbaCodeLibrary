@@ -321,11 +321,11 @@ Public Function Xlookup(ByVal LookupValue As Variant, _
 End Function
 
 
-Public Function DeleteStorage() As Boolean
+Public Function Delete() As Boolean
 
     On Error Resume Next
     this.Sheet.Delete
-    DeleteStorage = (Err.Number = 0)
+    Delete = (Err.Number = 0)
     On Error Resume Next
 
 End Function
