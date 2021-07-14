@@ -27,7 +27,7 @@ Public Enum lsSortOrder  'ls = ListStorage
 End Enum
 
 
-Public Function CreateStorage(ByRef wkb As Workbook, ByVal sName As String, Headings() As String) As Boolean
+Public Function CreateStorage(ByRef wkb As Workbook, ByVal sName As String, Headings As Variant) As Boolean
 'Does nothing and returns FALSE if sheet or listobject already exist
 'Creates a new sheet named "sName" and listobject named "tbl_sName" in wkb and returns TRUE
     
@@ -396,7 +396,7 @@ Private Sub FormatListStorageSheet(ByRef sht As Worksheet)
 End Sub
 
 
-Private Function CreateListStorageListObject(ByRef sht As Worksheet, Headings() As String) As ListObject
+Private Function CreateListStorageListObject(ByRef sht As Worksheet, Headings As Variant) As ListObject
 
     Dim i As Integer
     Const iTableRowStart As Integer = 7
@@ -423,7 +423,7 @@ Private Function CreateListStorageListObject(ByRef sht As Worksheet, Headings() 
 End Function
 
 
-Private Function CreateFilteredListStorageListObject(ByRef sht As Worksheet, Headings() As String) As ListObject
+Private Function CreateFilteredListStorageListObject(ByRef sht As Worksheet, Headings As Variant) As ListObject
 
     Dim i As Integer
     Const iTableRowStart As Integer = 7
