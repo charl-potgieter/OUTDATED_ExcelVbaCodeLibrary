@@ -321,8 +321,18 @@ Public Function Xlookup(ByVal LookupValue As Variant, _
 End Function
 
 
+Public Function DeleteStorage() As Boolean
 
-Function StorageAlreadyExists(ByRef wkb As Workbook, ByVal sName As String) As Boolean
+    On Error Resume Next
+    this.Sheet.Delete
+    DeleteStorage = (Err.Number = 0)
+    On Error Resume Next
+
+End Function
+
+
+
+Private Function StorageAlreadyExists(ByRef wkb As Workbook, ByVal sName As String) As Boolean
 
     Dim sht As Worksheet
     Dim sTestSheet As String
@@ -553,5 +563,6 @@ Private Function SelectedListObject(ByVal bFiltered) As ListObject
 
 End Function
  
+
 
 
