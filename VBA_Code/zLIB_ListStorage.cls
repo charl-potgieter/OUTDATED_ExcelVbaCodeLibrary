@@ -331,6 +331,10 @@ Public Function Delete() As Boolean
 End Function
 
 
+Public Function ListObj() As ListObject
+    Set ListObj = this.ListObj
+End Function
+
 
 Private Function StorageAlreadyExists(ByRef wkb As Workbook, ByVal sName As String) As Boolean
 
