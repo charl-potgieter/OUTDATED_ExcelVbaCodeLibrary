@@ -336,7 +336,7 @@ Public Function ListObj() As ListObject
 End Function
 
 
-Private Function StorageAlreadyExists(ByRef wkb As Workbook, ByVal sName As String) As Boolean
+Public Function StorageAlreadyExists(ByRef wkb As Workbook, ByVal sName As String) As Boolean
 
     Dim sht As Worksheet
     Dim sTestSheet As String
