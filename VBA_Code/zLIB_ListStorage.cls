@@ -363,7 +363,7 @@ Public Function StorageAlreadyExists(ByRef wkb As Workbook, ByVal sName As Strin
 End Function
 
 
-Public Function StorageIsEmpty() As Boolean
+Public Function IsEmpty() As Boolean
 
     Dim test As Double
     On Error Resume Next
