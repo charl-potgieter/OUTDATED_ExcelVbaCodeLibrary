@@ -368,7 +368,7 @@ Public Function IsEmpty() As Boolean
     Dim test As Double
     On Error Resume Next
     test = this.ListObj.DataBodyRange.Rows.Count
-    StorageIsEmpty = (Err.Number <> 0)
+    IsEmpty = (Err.Number <> 0)
     On Error GoTo 0
     
 
