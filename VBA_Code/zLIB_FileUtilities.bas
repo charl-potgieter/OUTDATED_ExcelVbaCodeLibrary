@@ -1,6 +1,7 @@
 Attribute VB_Name = "zLIB_FileUtilities"
 Option Explicit
 Option Private Module
+
 '-----------------------------------------------------------------------------
 '   Requires reference to Microsoft Scripting runtime
 '-----------------------------------------------------------------------------
