@@ -45,6 +45,11 @@ Public Function CreateStorage(ByRef wkb As Workbook, ByVal sName As String, Head
         
         Set this.FilteredListObj = CreateFilteredListStorageListObject(this.Sheet, Headings)
         FormatStorageListObject this.FilteredListObj
+        
+        
+        this.FilteredListObj.Range.Columns.Group
+        this.Sheet.Outline.ShowLevels ColumnLevels:=1
+        
     End If
 
 End Function
@@ -89,6 +94,12 @@ Public Property Get NumberOfRecords(Optional bFiltered As Boolean = False) As Lo
     On Error GoTo 0
     
 End Property
+
+Public Sub AddBlankRow()
+
+    AddOneRowToListObject this.ListObj
+
+End Sub
 
 
 Public Function ItemsInField(ByVal sFieldName As String, _
@@ -336,6 +347,12 @@ Public Function ListObj() As ListObject
 End Function
 
 
+Public Function FilteredListObj() As ListObject
+    Set FilteredListObj = this.FilteredListObj
+End Function
+
+
+
 Public Function StorageAlreadyExists(ByRef wkb As Workbook, ByVal sName As String) As Boolean
 
     Dim sht As Worksheet
@@ -412,11 +429,6 @@ Private Sub FormatListStorageSheet(ByRef sht As Worksheet)
         .Font.Color = RGB(170, 170, 170)
         .Font.Size = 8
     End With
-    
-    'Freeze Panes
-    sht.Activate
-    ActiveWindow.SplitRow = 7
-    ActiveWindow.FreezePanes = True
 
 
 End Sub
@@ -441,7 +453,6 @@ Private Function CreateListStorageListObject(ByRef sht As Worksheet, Headings As
     'example which will be correctly saved as strings with below setting.
     lo.Range.EntireColumn.NumberFormat = "@"
     
-    sht.Cells(iTableRowStart - 2, iTableColStart).Value = "Original List"
     sht.Cells(iTableRowStart - 2, iTableColStart).Font.Bold = True
     
     Set CreateListStorageListObject = lo
@@ -476,6 +487,7 @@ Private Function CreateFilteredListStorageListObject(ByRef sht As Worksheet, Hea
     sht.Cells(iTableRowStart - 2, iTableColStart).Value = "Filtered List"
     sht.Cells(iTableRowStart - 2, iTableColStart).Font.Bold = True
     
+
     Set CreateFilteredListStorageListObject = lo
 
 End Function
@@ -579,6 +591,8 @@ Private Function SelectedListObject(ByVal bFiltered) As ListObject
 
 End Function
  
+
+
 
 
 
