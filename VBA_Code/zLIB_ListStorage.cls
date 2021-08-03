@@ -392,6 +392,16 @@ Public Function IsEmpty() As Boolean
 End Function
 
 
+Public Sub ClearData()
+
+    On Error Resume Next 'In event there is no databody range
+    this.ListObj.DataBodyRange.Rows.Delete
+    On Error GoTo 0
+
+End Sub
+
+
+
 Private Function CreateListStorageSheet(ByRef wkb As Workbook, ByVal sName As String) As Worksheet
 
     Dim sht As Worksheet
