@@ -55,35 +55,6 @@ Public Function CreateStorage(ByRef wkb As Workbook, ByVal sName As String, Head
 End Function
 
 
-'Public Function CreateStorageFromPowerQuery(ByRef wkb As Workbook, ByVal sName As String, ByVal sPowerQueryName As String) As Boolean
-''Does nothing and returns FALSE if sheet or listobject already exist
-''Creates a new sheet named "sName" and listobject named "tbl_sName" in wkb and returns TRUE
-'
-'    If StorageAlreadyExists(wkb, sName) Then
-'        CreateStorageFromPowerQuery = False
-'    Else
-'        CreateStorageFromPowerQuery = True
-'
-'        Set this.wkb = wkb
-'        Set this.Sheet = Create(wkb, sName, sPowerQueryName)
-'        FormatListStorageSheet this.Sheet
-'
-'        Set this.ListObj = CreateListStorageListObject(this.Sheet, Headings)
-'        FormatStorageListObject this.ListObj
-'
-'        Set this.FilteredListObj = CreateFilteredListStorageListObject(this.Sheet, Headings)
-'        FormatStorageListObject this.FilteredListObj
-'
-'
-'        this.FilteredListObj.Range.Columns.Group
-'        this.Sheet.Outline.ShowLevels ColumnLevels:=1
-'
-'    End If
-'
-'End Function
-
-
-
 Public Function AssignStorage(ByRef wkb As Workbook, ByVal sName As String) As Boolean
 'Assigns the storage object to a specific sheet and listobject
     
@@ -421,11 +392,6 @@ Public Function IsEmpty() As Boolean
 End Function
 
 
-Property Get StorageSheet() As Worksheet
-    StorageSheet = this.Sheet
-End Property
-
-
 Private Function CreateListStorageSheet(ByRef wkb As Workbook, ByVal sName As String) As Worksheet
 
     Dim sht As Worksheet
@@ -468,27 +434,19 @@ Private Sub FormatListStorageSheet(ByRef sht As Worksheet)
 End Sub
 
 
-Private Function CreateListStorageListObject(ByRef sht As Worksheet, ByVal sPowerQueryName As String) As ListObject
+Private Function CreateListStorageListObject(ByRef sht As Worksheet, Headings As Variant) As ListObject
 
     Dim i As Integer
     Const iTableRowStart As Integer = 7
     Const iTableColStart As Integer = 2
     Dim lo As ListObject
     
-    
-    Set lo = ActiveSheet.ListObjects.Add( _
-        SourceType:=0, _
-        Source:="OLEDB;Provider=Microsoft.Mashup.OleDb.1;Data Source=$Workbook$;Location=" & sPowerQueryName & ";Extended Properties=""""", _
-        Destination:=Range("$B$15") _
-    )
+    For i = LBound(Headings) To UBound(Headings)
+        sht.Cells(iTableRowStart, iTableColStart + i).Value = Headings(i)
+    Next i
 
-    With lo.QueryTable
-        .CommandType = xlCmdSql
-        .CommandText = Array("SELECT * FROM [" & sPowerQueryName & "]")
-        .Refresh BackgroundQuery:=False
-    End With
-    
-    
+    Set lo = sht.ListObjects.Add(xlSrcRange, _
+        sht.Cells(iTableRowStart, iTableColStart).CurrentRegion, , xlYes)
     lo.Name = "tbl_" & sht.Name
     
     'Set number format to text to ensure no errors when saving formulas for
@@ -633,6 +591,8 @@ Private Function SelectedListObject(ByVal bFiltered) As ListObject
 
 End Function
  
+
+
 
 
 
