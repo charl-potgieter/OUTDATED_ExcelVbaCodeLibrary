@@ -603,6 +603,12 @@ End Function
  
 
 
+Private Sub Class_Terminate()
+   Set this.FilteredListObj = Nothing
+   Set this.ListObj = Nothing
+   Set this.Sheet = Nothing
+   Set this.wkb = Nothing
+End Sub
 
 
 
